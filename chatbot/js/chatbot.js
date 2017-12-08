@@ -93,6 +93,8 @@ var ChatBot = function () {
             if ($(inputs).val() != '|') {
                 newValue += $(inputs).val();
             }
+            //console.log("inputs : "+inputs);
+            //console.log("newValue : "+newValue);
             newValue += state.currentInput.slice(state.start,state.start+1);
             $(inputs).val(newValue);
             state.start++;
@@ -285,6 +287,7 @@ var ChatBot = function () {
                         }).done(function (data) {
 
                             var content = data.AbstractText;
+                            console.log("duckduckgo return : "+content);
 
                             // no direct answer? tell about related topics then
                             if (content == '' && data.RelatedTopics.length > 0) {
@@ -337,7 +340,180 @@ var ChatBot = function () {
                         return null;
                     }
                 }
-            }
+            },
+
+
+
+            openweathermap : function(){
+                var apiKeyWeather = "824124b860cfccde7a00b390636217a2";
+                // patterns that the engine can resolve
+                var capabilities = [
+                    "Ask what something is like 'What is the weather for London'?",
+                ];
+
+
+                return {
+                    react: function (query) {
+                        console.log("Query :1::: "+query);
+                        var ville = query;
+
+                        $.ajax({
+                            type: 'GET',
+                            url: 'http://api.openweathermap.org/find?q=' + encodeURIComponent("paris"),
+                            dataType: 'jsonp'
+                        }).done(function (data) {
+
+                            var content = data.AbstractText;
+                            console.log("openweathermap1 return : "+content);
+
+                            // no direct answer? tell about related topics then
+                            if (content == '' && data.RelatedTopics.length > 0) {
+
+                                content = '<p>I found multiple answers for you:</p>';
+
+                                var media = [];
+                                for (var i = 0; i < data.RelatedTopics.length; i++) {
+                                    var ob = data.RelatedTopics[i];
+                                    if (ob.Result == undefined) {
+                                        continue;
+                                    }
+                                    if (ob.Icon.URL != '' && ob.Icon.URL.indexOf(".ico") < 0) {
+                                        media.push(ob.Icon.URL);
+                                    }
+
+                                    content += '<p>' + ob.Result.replace("</a>", "</a> ") + '</p>';
+                                }
+
+                                ///content += '<img src="' + ob.Icon.URL + '" align="left" />' +
+
+                                for (i = 0; i < media.length; i++) {
+                                    var m = media[i];
+                                    content += '<img src="' + m + '" style="margin-right:5px"/>';
+                                }
+
+                            } else {
+
+                                if (data.Image != undefined && data.Image != '') {
+
+                                    content += '<br>';
+
+                                    content += '<div class="imgBox">' +
+                                        '<img src="' + data.Image + '" />' +
+                                        '<div class="title">' + data.Heading + '</div>' +
+                                        '</div>';
+
+                                }
+
+                            }
+
+                            ChatBot.addChatEntry(content, "bot");
+                            ChatBot.thinking(false);
+                        });
+
+                        /*$.getJSON("http://api.openweathermap.org/data/2.5/weather",
+                            {
+                                "q":"Paris",
+                                "units":"metric",
+                                "lang":"fr",
+                                "APPID":apiKeyWeather
+                            },
+                            function(data){
+                                var content = data.AbstractText;
+                                console.log("CONTENT : "+content);
+                                //  data[0].weather[0].description;
+                                var now = new Date();
+                                var jour    = ('0'+now.getDate()   ).slice(-2);
+                                var mois    = ('0'+(now.getMonth()+1)).slice(-2);
+                                //var mois    = now.getMonth() + 1;
+                                var annee   = now.getFullYear();
+                                var heure   = ('0'+now.getHours()  ).slice(-2);
+                                var minute  = ('0'+now.getMinutes()).slice(-2);
+                                var seconde = ('0'+now.getSeconds()).slice(-2);
+
+                                var res = $('#resultat');
+                                res.append("<h3 class='btn'>"+"Voici la météo à "+ville+"</h3>");
+                                res.append("<img src=http://openweathermap.org/img/w/"+data.weather[0].icon+".png>"+data.main.temp+"°C"+"<span class='tag-box -success'> calculé le "+jour+"/"+mois+"/"+annee+" à "+heure+":"+minute+":"+seconde+"</span>");
+                                res.append("<p>Temps    "+data.weather[0].description+"</p>");
+                                res.append("<p>Température  "+data.main.temp+" °C </p>");
+                                res.append("<p>Pression                 "+data.main.pressure+"</p>");
+                                res.append("<p>Vitesse du vent          "+data.wind.speed+"km/h </p>");
+                                res.append("<p>Direction du vent        "+data.wind.deg+" degrés </p>");
+                                var sunrise = String(data.sys.sunrise);
+                                console.log("sunrise : "+sunrise);
+                                res.append("<p>Lever du soleil          "+jour+"/"+mois+"/"+annee+" à "+sunrise.substring(0,2)+":"+sunrise.substring(2,4)+":"+sunrise.substring(4,6)+" </p>");
+                                var sunset = String(data.sys.sunset);
+                                console.log("sunset : "+sunset);
+                                res.append("<p>Coucher du soleil        "+jour+"/"+mois+"/"+annee+" à "+sunset.substring(0,2)+":"+sunset.substring(2,4)+":"+sunset.substring(4,6)+" </p>");
+
+                                var infoMeteo = data.main.temp+'\n'+data.main.pressure+'\n'+data.wind.speed;
+                            }
+                        );*/
+                    },
+                    getCapabilities: function () {
+                        return capabilities;
+                    },
+                    getSuggestUrl: function() {
+                        return null;
+                    }
+
+                }
+            },
+
+            /*
+            $(function (argument) {
+                $('form').on('submit', function(ev){
+                    var apiKey = "824124b860cfccde7a00b390636217a2";
+                    ev.preventDefault();
+                    var clavier = $(this).find("input:text").val();
+                    var ville;
+
+                    console.log("clavier : "+clavier);
+                    if (clavier.) {
+
+                    }
+
+                    $.getJSON("http://api.openweathermap.org/data/2.5/weather",
+                    {
+                        "q":ville,
+                        "units":"metric",
+                        "lang":"fr",
+                        "APPID":apiKey
+                    },
+                    function(data){
+                        //  data[0].weather[0].description;
+                        var now = new Date();
+                        var jour    = ('0'+now.getDate()   ).slice(-2);
+                        var mois    = ('0'+(now.getMonth()+1)).slice(-2);
+                        //var mois    = now.getMonth() + 1;
+                        var annee   = now.getFullYear();
+                        var heure   = ('0'+now.getHours()  ).slice(-2);
+                        var minute  = ('0'+now.getMinutes()).slice(-2);
+                        var seconde = ('0'+now.getSeconds()).slice(-2);
+
+                        var res = $('#resultat');
+                        res.append("<h3 class='btn'>"+"Voici la météo à "+ville+"</h3>");
+                        res.append("<img src=http://openweathermap.org/img/w/"+data.weather[0].icon+".png>"+data.main.temp+"°C"+"<span class='tag-box -success'> calculé le "+jour+"/"+mois+"/"+annee+" à "+heure+":"+minute+":"+seconde+"</span>");
+                        res.append("<p>Temps    "+data.weather[0].description+"</p>");
+                        res.append("<p>Température  "+data.main.temp+" °C </p>");
+                        res.append("<p>Pression                 "+data.main.pressure+"</p>");
+                        res.append("<p>Vitesse du vent          "+data.wind.speed+"km/h </p>");
+                        res.append("<p>Direction du vent        "+data.wind.deg+" degrés </p>");
+                        var sunrise = String(data.sys.sunrise);
+                        console.log("sunrise : "+sunrise);
+                        res.append("<p>Lever du soleil          "+jour+"/"+mois+"/"+annee+" à "+sunrise.substring(0,2)+":"+sunrise.substring(2,4)+":"+sunrise.substring(4,6)+" </p>");
+                        var sunset = String(data.sys.sunset);
+                        console.log("sunset : "+sunset);
+                        res.append("<p>Coucher du soleil        "+jour+"/"+mois+"/"+annee+" à "+sunset.substring(0,2)+":"+sunset.substring(2,4)+":"+sunset.substring(4,6)+" </p>");
+                    }
+                );
+            })
+
+*/
+
+
+
+
+
         },
         init: function (options) {
             var settings = jQuery.extend({

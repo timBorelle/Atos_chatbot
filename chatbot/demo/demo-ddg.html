@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <title>Javascript Chat Bot Demo</title>
-    <style>
-        body {
-            color: #333;
-            background-color: #efefef;
-            font: 13px helvetica,arial,freesans,clean,sans-serif;
-        }
-        #demo {
-            /*background-color: #ffffff;*/
-            width: 80%;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 20px;
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <title>Javascript Chat Bot Demo</title>
+  <style>
+  body {
+    color: #333;
+    background-color: #efefef;
+    font: 13px helvetica,arial,freesans,clean,sans-serif;
+  }
+  #demo {
+    /*background-color: #ffffff;*/
+    width: 80%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
 
-            background-color: #F8F8F8;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px #999;
-            line-height: 1.4em;
-            font: 13px helvetica,arial,freesans,clean,sans-serif;
-            color: black;
-        }
-        #demo input {
-            padding: 8px;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            width: 400px;
-        }
-        #chatBotCommandDescription {
-            display: none;
-            margin-bottom: 20px;
-        }
-        input:focus {
-            outline: none;
-        }
-        .chatBotChatEntry {
-            display: none;
-        }
-    </style>
+    background-color: #F8F8F8;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px #999;
+    line-height: 1.4em;
+    font: 13px helvetica,arial,freesans,clean,sans-serif;
+    color: black;
+  }
+  #demo input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    width: 400px;
+  }
+  #chatBotCommandDescription {
+    display: none;
+    margin-bottom: 20px;
+  }
+  input:focus {
+    outline: none;
+  }
+  .chatBotChatEntry {
+    display: none;
+  }
+  </style>
 </head>
 <body>
 
-<script src="../js/chatbot.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/chatbot.css" />
+  <script src="../js/chatbot.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/chatbot.css" />
 
-<div id="demo">
+  <div id="demo">
     <div id="chatBotCommandDescription"></div>
     <input id="humanInput" class="inputFromHuman" type="text" placeholder="Say something" />
 
@@ -58,45 +58,103 @@
     <div style="clear: both;">&nbsp;</div>
 
     <div id="chatBot">
-        <div id="chatBotThinkingIndicator"></div>
-        <div id="chatBotHistory"></div>
+      <div id="chatBotThinkingIndicator"></div>
+      <div id="chatBotHistory"></div>
     </div>
-</div>
+  </div>
 
 
-<script>
-    var sampleConversation = [
-        "Hi",
-        "My name is Fry",
-        "Where is China?",
-        "What is the population of China?",
-        "Bye"
-    ];
-    var config = {
-        botName: 'Duck Duck Go Bot',
-        inputs: '#humanInput',
-        inputCapabilityListing: true,
-        engines: [ChatBot.Engines.duckduckgo()],
-        addChatEntryCallback: function(entryDiv, text, origin) {
-            entryDiv.delay(200).slideDown();
-        }
-    };
-    ChatBot.init(config);
-    ChatBot.setBotName("Duck Duck Go Bot");
-    ChatBot.addPattern("^hi$", "response", "Howdy, friend", undefined, "Say 'Hi' to be greeted back.");
-    // Easter Eggs
-      ChatBot.addPattern("^Libérés, délivrés$", "response", "<div> ><iframe style='border: 0; position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%' src='https://www.youtube.com/embed/UfmKDluT_0M?start=14&rel=0&amp;controls=0&amp;showinfo=0&amp;&autoplay=1' frameborder='0' gesture='media' allow='encrypted-media' allowfullscreen></iframe></div>", undefined, "Say 'Hi' to be greeted back.");
-    ChatBot.addPattern("^Darth Vader$", "response", "<img src='https://media.giphy.com/media/xT9DPpf0zTqRASyzTi/giphy.gif' title='darth vader'/>", undefined, "Say 'Hi' to be greeted back.");
-    ChatBot.addPattern("^sad$", "response", "<img src='https://media.giphy.com/media/FMBH6hrJJ3j9K/giphy.gif' title='awesome'/>", undefined, "Say 'Hi' to be greeted back.");
+  <script>
+  var sampleConversation = [
+    "Hi",
+    "My name is Fry",
+    "Where is China?",
+    "What is the population of China?",
+    "Bye"
+  ];
+  var config = {
+    botName: 'Duck Duck Go Bot',
+    inputs: '#humanInput',
+    inputCapabilityListing: true,
+    engines: [ChatBot.Engines.duckduckgo()],
+    addChatEntryCallback: function(entryDiv, text, origin) {
+      entryDiv.delay(200).slideDown();
+    }
+  };
+  ChatBot.init(config);
+  ChatBot.setBotName("Duck Duck Go Bot");
+  ChatBot.addPattern("^hi$", "response", "Howdy, friend", undefined, "Say 'Hi' to be greeted back.");
+  // Easter Eggs
+  ChatBot.addPattern("^Libérés, délivrés$", "response", "<div> ><iframe style='border: 0; position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%' src='https://www.youtube.com/embed/UfmKDluT_0M?start=14&rel=0&amp;controls=0&amp;showinfo=0&amp;&autoplay=1' frameborder='0' gesture='media' allow='encrypted-media' allowfullscreen></iframe></div>", undefined, "Say 'Hi' to be greeted back.");
+  ChatBot.addPattern("^Darth Vader$", "response", "<img src='https://media.giphy.com/media/xT9DPpf0zTqRASyzTi/giphy.gif' title='darth vader'/>", undefined, "Say 'Hi' to be greeted back.");
+  ChatBot.addPattern("^sad$", "response", "<img src='https://media.giphy.com/media/FMBH6hrJJ3j9K/giphy.gif' title='awesome'/>", undefined, "Say 'Hi' to be greeted back.");
 
-    ChatBot.addPattern("^bye$", "response", "See you later buddy", undefined, "Say 'Bye' to end the conversation.");
-    ChatBot.addPattern("(?:my name is|I'm|I am) (.*)", "response", "hi $1, thanks for talking to me today", function (matches) {
-        ChatBot.setHumanName(matches[1]);
-    },"Say 'My name is [your name]' or 'I am [name]' to be called that by the bot");
-    ChatBot.addPattern("(what is the )?meaning of life", "response", "42", undefined, "Say 'What is the meaning of life' to get the answer.");
-    ChatBot.addPattern("compute ([0-9]+) plus ([0-9]+)", "response", undefined, function (matches) {
-        ChatBot.addChatEntry("That would be "+(1*matches[1]+1*matches[2])+".","bot");
-    },"Say 'compute [number] plus [number]' to make the bot your math monkey");
+  ChatBot.addPattern("^bye$", "response", "See you later buddy", undefined, "Say 'Bye' to end the conversation.");
+  ChatBot.addPattern("(?:my name is|I'm|I am) (.*)", "response", "hi $1, thanks for talking to me today", function (matches) {
+    ChatBot.setHumanName(matches[1]);
+  },"Say 'My name is [your name]' or 'I am [name]' to be called that by the bot");
+  ChatBot.addPattern("(what is the )?meaning of life", "response", "42", undefined, "Say 'What is the meaning of life' to get the answer.");
+
+
+  ChatBot.addPattern("what is the weather for ([a-z]+)", "response", undefined, function(matches){
+    console.log("********** content : "+matches);
+    //ChatBot.addChatEntry("That would be "+(matches[1])+".","bot");
+    var ville = matches[1];
+    console.log("********** ville : "+ville);
+    var apiKeyWeather = "824124b860cfccde7a00b390636217a2";
+
+    $.getJSON("http://api.openweathermap.org/data/2.5/weather",
+    {
+      "q":ville,
+      "units":"metric",
+      "lang":"fr",
+      "APPID":apiKeyWeather
+    },
+    function(data){
+      var content = data.AbstractText;
+      console.log("CONTENT : "+content);
+      //  data[0].weather[0].description;
+      var now = new Date();
+      var jour    = ('0'+now.getDate()   ).slice(-2);
+      var mois    = ('0'+(now.getMonth()+1)).slice(-2);
+      //var mois    = now.getMonth() + 1;
+      var annee   = now.getFullYear();
+      var heure   = ('0'+now.getHours()  ).slice(-2);
+      var minute  = ('0'+now.getMinutes()).slice(-2);
+      var seconde = ('0'+now.getSeconds()).slice(-2);
+
+      /*var res = $('#resultat');
+      res.append("<h3 class='btn'>"+"Voici la météo à "+ville+"</h3>");
+      res.append("<img src=http://openweathermap.org/img/w/"+data.weather[0].icon+".png>"+data.main.temp+"°C"+"<span class='tag-box -success'> calculé le "+jour+"/"+mois+"/"+annee+" à "+heure+":"+minute+":"+seconde+"</span>");
+      res.append("<p>Temps    "+data.weather[0].description+"</p>");
+      res.append("<p>Température  "+data.main.temp+" °C </p>");
+      res.append("<p>Pression                 "+data.main.pressure+"</p>");
+      res.append("<p>Vitesse du vent          "+data.wind.speed+"km/h </p>");
+      res.append("<p>Direction du vent        "+data.wind.deg+" degrés </p>");
+      var sunrise = String(data.sys.sunrise);
+      console.log("sunrise : "+sunrise);
+      res.append("<p>Lever du soleil          "+jour+"/"+mois+"/"+annee+" à "+sunrise.substring(0,2)+":"+sunrise.substring(2,4)+":"+sunrise.substring(4,6)+" </p>");
+      var sunset = String(data.sys.sunset);
+      console.log("sunset : "+sunset);
+      res.append("<p>Coucher du soleil        "+jour+"/"+mois+"/"+annee+" à "+sunset.substring(0,2)+":"+sunset.substring(2,4)+":"+sunset.substring(4,6)+" </p>");*/
+
+      var infoMeteo = data.main.temp+" °C ";
+      ChatBot.addChatEntry("Voici la météo pour "+ville+'\n'+infoMeteo+".","bot");
+
+
+
+      var entryDiv = $('<div class="chatBotChatEntry ' + data.main.temp + '> </br> <img src=http://openweathermap.org/img/w/'+data.weather[0].icon+'.png> </div>');
+      /*entryDiv.html('<span class="origin">' + " test " + '</span>' + data.main.pressure + '<img src=http://openweathermap.org/img/w/'+data.weather[0].icon+'.png>');*/
+      $('#chatBotHistory').prepend(entryDiv);
+    }
+  );
+
+},"Say 'what is the weather for [your city]' to make the bot show the weather of your city");
+
+
+ChatBot.addPattern("compute ([0-9]+) plus ([0-9]+)", "response", undefined, function (matches) {
+  ChatBot.addChatEntry("That would be "+(1*matches[1]+1*matches[2])+".","bot");
+},"Say 'compute [number] plus [number]' to make the bot your math monkey");
 
 </script>
 </body>
