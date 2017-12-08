@@ -31,14 +31,6 @@
             border: 1px solid #ddd;
             width: 400px;
         }
-        .button {
-            display: inline-block;
-            background-color: darkcyan;
-            color: #fff;
-            padding: 8px;
-            cursor: pointer;
-            float: right;
-        }
         #chatBotCommandDescription {
             display: none;
             margin-bottom: 20px;
@@ -58,7 +50,7 @@
 
 <div id="demo">
     <div id="chatBotCommandDescription"></div>
-    <input id="humanInput" type="text" placeholder="Say something" />
+    <input id="humanInput" class="inputFromHuman" type="text" placeholder="Say something" />
 
     <div class="button" onclick="if (!ChatBot.playConversation(sampleConversation,4000)) {alert('conversation already running');};">Play sample conversation!</div>
     <div class="button" onclick="$('#chatBotCommandDescription').slideToggle();" style="margin-right:10px">What can I say?</div>
@@ -92,6 +84,10 @@
     ChatBot.init(config);
     ChatBot.setBotName("Duck Duck Go Bot");
     ChatBot.addPattern("^hi$", "response", "Howdy, friend", undefined, "Say 'Hi' to be greeted back.");
+    // Easter Eggs
+    ChatBot.addPattern("^Darth Vader$", "response", "<img src='https://media.giphy.com/media/xT9DPpf0zTqRASyzTi/giphy.gif' title='darth vader'/>", undefined, "Say 'Hi' to be greeted back.");
+    ChatBot.addPattern("^sad$", "response", "<img src='https://media.giphy.com/media/FMBH6hrJJ3j9K/giphy.gif' title='awesome'/>", undefined, "Say 'Hi' to be greeted back.");
+
     ChatBot.addPattern("^bye$", "response", "See you later buddy", undefined, "Say 'Bye' to end the conversation.");
     ChatBot.addPattern("(?:my name is|I'm|I am) (.*)", "response", "hi $1, thanks for talking to me today", function (matches) {
         ChatBot.setHumanName(matches[1]);

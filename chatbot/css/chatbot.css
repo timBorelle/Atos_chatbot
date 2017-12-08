@@ -27,7 +27,15 @@
     height: 218px;
     overflow: hidden;
 }
-.chatBotChatEntry .imgBox .actions .button {
+.button {
+    display: none;
+    background-color: darkcyan;
+    color: #fff;
+    padding: 8px;
+    cursor: pointer;
+    float: right;
+}
+.chatBotChatEntry .imgBox .actions {
     margin-top: 10px;
     font-size: 18px;
     padding: 5px;
