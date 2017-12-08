@@ -100,7 +100,6 @@
     console.log("********** content : "+matches);
     //ChatBot.addChatEntry("That would be "+(matches[1])+".","bot");
     var ville = matches[1];
-    console.log("********** ville : "+ville);
     var apiKeyWeather = "824124b860cfccde7a00b390636217a2";
 
     $.getJSON("http://api.openweathermap.org/data/2.5/weather",
@@ -143,9 +142,13 @@
 
 
 
-      var entryDiv = $('<div class="chatBotChatEntry ' + data.main.temp + '> </br> <img src=http://openweathermap.org/img/w/'+data.weather[0].icon+'.png> </div>');
+      var entryDiv = $('<div class="chatBotChatEntry ' + data.main.temp + '>');
+      var entryDiv2 = $('<img src=http://openweathermap.org/img/w/'+data.weather[0].icon+'.png>');
+      var entryDiv3 = $('</div>');
       /*entryDiv.html('<span class="origin">' + " test " + '</span>' + data.main.pressure + '<img src=http://openweathermap.org/img/w/'+data.weather[0].icon+'.png>');*/
       $('#chatBotHistory').prepend(entryDiv);
+      $('#chatBotHistory').prepend(entryDiv2);
+      $('#chatBotHistory').prepend(entryDiv3);
     }
   );
 
